@@ -1,0 +1,67 @@
+doctype html
+html
+  head
+    title= title
+    link(href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet")
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    
+  body
+    header 
+      nav   
+        .logo_wrapper
+          a(href="/")
+            img#logo(src="/images/logo.png", alt="upload") 
+        ul 
+          //- li(onclick="document.getElementById('form_1').style.display='block'" style="width:auto;") 
+          //-   a(href="")  Find your Hotel 
+              
+          if !user    
+            li
+              
+                a(href="/sign-up") Sign up
+            li
+        
+                a(href="/login") Login 
+          else
+            li 
+              a(href="/my-account") My Bookings/ accounts
+            li 
+              a(href="/logout") Logout (#{user.first_name})
+      .search_nav 
+        form(action="/results" method="POST")
+          .input_wrapper 
+            label(for="destination") Destination 
+            input(for="text" id="destination" name="destination")
+          .input_wrapper 
+            label(for="duration") Duration
+            input(type="text" id="duration" name="duration") 
+          .input_wrapper 
+            label(for="departure-date") Departure Date 
+            input(type="date" id="departure-date" name="dateOfDeparture" required)   
+          .input_wrapper 
+            label(for="numberofguest") Number of guests
+            input(type="number" id="numberofguest" name="numberOfGuest" required)
+          .input_wrapper 
+            select(name="stars")
+              option(value="1") Min 1 Star
+              option(value="2") Min 2 Star
+              option(value="3") Min 3 Star
+              option(value="4") Min 4 Star
+              option(value="5") Min 5 Star
+          .input_wrapper 
+            select(name="sort") 
+              option(value="1") Price: Low-High
+              option(value="-1") Price: High to low
+          .input_wrapper 
+            button(type="submit") SEARCH!!!!
+
+      - const value = Object.values(flash) 
+      - const keys = Object.keys(flash)
+      - console.log(value)
+      if keys.length > 0 
+        div(class=`message message_${keys} `)
+          span=value
+          span.close_btn(onclick="this.parentNode.remove()") &times;
+
+      img(src="/images/beach.jpg", alt="not found")
+    block content
